@@ -13,5 +13,8 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 # Copy the ./app directory inside the /code directory.
 COPY ./app /code/app
 
+#can create file storage folder, map the volume onto 
+
 # Set the command to use fastapi run, which uses Uvicorn underneath.
 CMD ["fastapi", "run", "app/main.py", "--port", "80"]
+
