@@ -1,25 +1,23 @@
-from typing import Annotated, Union
-from fastapi import FastAPI, File, UploadFile
-#import shutil # what's that
-# import os
+from typing import Union
+from fastapi import FastAPI, UploadFile
 
 app = FastAPI() # instance of FastAPI class
 
 @app.get("/")
 async def read_root():
-    return "Hello fff"
+    return "Hello World"
 
 @app.post("/uploadfile/")
 async def create_upload_file(file: Union[UploadFile, None] = None):
     if not file:
         return {"message": "No upload file sent"}
     else:
-        contents = await file.read() # return type String
-        #newfile_directory = "C:/Users/htcyl/Desktop/HTX_Intern/fast-api/file-storage.testest.txt" # no, vol. mount directory...
-        #with open(newfile_directory, 'a') as newfile:
-        #    newfile.write(contents)
+        contents = await file.read() # read file. return type is byte (think so)
+        file_name = file.filename
+        newfile_dir_name = f"/var/lib/data/store/copied_{file_name}" # in docker directory
+        with open(newfile_dir_name, 'w') as new_file: # create new file
+            new_file.write(str(contents, encoding='utf-8')) # convert contents from byte to string
         return {"filename": file.filename, "original contents": contents}
-
 
 ## Ignore below. 
 ### Raw code given ###
@@ -95,6 +93,9 @@ async def create_upload_file(file: Union[UploadFile, None] = None):
 ## Today morning Try D4? ##
 ## My way of doing
 '''
+from typing import Annotated, Union
+from fastapi import FastAPI, File, UploadFile
+
 @app.post("/myfiles/") # change to get if you want to enter the website... otherwise cURL to post something.
 async def create_file(file: Annotated[Union[str, None], File()] = None): # change from byte to str
     if not file:
