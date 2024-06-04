@@ -3,7 +3,11 @@
 docker build -t fast-api_test .
 docker run -dp 127.0.0.1:80:80 --volume //c/Users/htcyl/Desktop/HTX_Intern/fast-api/file-storage:/var/lib/data/store fast-api_test
 
-##In wsl or bash
+# Using docker compose: 
+docker compose up -d --build
+docker compose down
+
+## In wsl or bash
 curl -X "GET" "http://127.0.0.1:80/"    
 curl -X "POST" -F "file=@../test_file.txt" "http://127.0.0.1:80/uploadfile/"
 curl -X "POST" -F "file=@../lala.txt" "http://127.0.0.1:80/uploadfile/"

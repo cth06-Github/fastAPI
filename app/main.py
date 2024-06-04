@@ -1,6 +1,20 @@
 from typing import Union
-from fastapi import FastAPI, UploadFile
+from fastapi import FastAPI, UploadFile, Depends, HTTPException
+from pydantic import BaseModel
+#from app.database import Base
+from .database import SessionLocal, engine
+from .schema import DeviceInfo, Configuration
+from . import crud, models
 
+models.Base.metadata.create_all(bind=engine)
+
+def db():
+    try:
+        db = SessionLocal()
+        yield db
+    finally:
+        db.close()
+    
 app = FastAPI() # instance of FastAPI class
 
 @app.get("/")
@@ -18,6 +32,63 @@ async def create_upload_file(file: Union[UploadFile, None] = None):
         with open(newfile_dir_name, 'w') as new_file: # create new file
             new_file.write(str(contents, encoding='utf-8')) # convert contents from byte to string
         return {"filename": file.filename, "original contents": contents}
+
+@app.get("/test")
+async def read():
+    return "yay"
+
+@app.get("/123")
+def read123():
+    return 123
+
+@app.post('/device/info')
+def save_device_info(info: DeviceInfo, db=Depends(db)):
+    object_in_db = crud.get_device_info(db, info.token)
+    if object_in_db:
+        raise HTTPException(400, detail= crud.error_message('This device info already exists'))
+    return crud.save_device_info(db,info)
+
+@app.get('/device/info/{token}')
+def get_device_info(token: str, db=Depends(db)):
+    info = crud.get_device_info(db,token)
+    if info:
+        return info
+    else:
+        raise HTTPException(404, crud.error_message('No device found for token {}'.format(token)))
+
+@app.get('/device/info')
+def get_all_device_info(db=Depends(db)):
+    return crud.get_device_info(db)
+
+@app.post('/configuration')
+def save_configuration(config: Configuration, db=Depends(db)):
+    # always maintain one config
+    crud.delete_nudges_configuration(db)
+    return crud.save_nudges_configuration(db, config)
+
+@app.get('/configuration')
+def get_configuration(db=Depends(db)):
+    config = crud.get_nudges_configuration(db)
+    if config:
+        return config
+    else:
+        raise HTTPException(404, crud.error_message('No configuration set'))
+
+# Create a SQLAlchemy database engine using the DATABASE_URL
+#DATABASE_URL = 'postgresql://{}w:{}@{}/{}'.format('myuser', 'mypassword', 'postgres:5432', 'mydatabase')
+#engine = create_engine(DATABASE_URL)
+
+# Create a Session class to handle database interactions
+#SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Define a function to get a database session
+#def get_db():
+#    db = SessionLocal()
+#    try:
+#        yield db
+#    finally:
+#        db.close()
+
 
 ## Ignore below. 
 ### Raw code given ###

@@ -1,0 +1,36 @@
+#version: '3' <-- specifies docker compose version
+services:
+  app:
+    restart: always
+    build: . # docker compose looks for Dockerfile in the directory after the . and build accordingly
+    ports:
+      - 127.0.0.1:80:80
+    networks:
+      - anothernetwork
+    volumes:
+      - .:/usr/src/app-data
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    ports:
+      - 5432:5432
+    networks:
+      - mynetwork
+    volumes:
+      - database:/var/lib/postgresql/data/
+    expose:
+      - 5432
+
+networks:
+  mynetwork:
+  anothernetwork:
+
+volumes:
+  database:
