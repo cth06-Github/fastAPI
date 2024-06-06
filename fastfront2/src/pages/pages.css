@@ -1,0 +1,68 @@
+.Page {
+  text-align: center;
+  /*padding: 10px 20px; /*what's the order of direction again*/
+  margin: 10vh 10vw; /*if I state 1, then does it apply to the rest also?*/
+  
+}
+
+.Page-header {
+  background-color: #282c34;
+  min-height: 15vh; /*to check units definition: vh, vmin, px, %, etc. ?*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(20px + 2vmin);
+  color: white;
+}
+
+.mainBox{
+  background-color: #19cd19;
+  align-items: center;
+  height: 50vh;
+  width: 78vw; /*how to make it relative bound to the header*/
+  color: rgb(20, 1, 1);
+  border: 5px solid #f40c0c;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /*oh the one that separates the 2 boxes*/
+}
+
+
+.subBox{
+  background-color: #fdf900;
+  margin: 10vh 10vw; /*how come suddenly so...much?*/
+  height: 30vh;
+  width: 70vw;
+  color: rgb(20, 1, 1);
+  border: 5px solid #9e0ae3;
+  display: flex;
+  flex-direction: column;
+  padding: 0 3em;
+}
+
+/* CANNOT CHANGE FROM HERE? BUT WHY THOUGH. To understand/debug later */
+/*
+.miniButton{
+  width: 1em; /*width is correct. But the word "submit" will exceed"
+  color: rgb(7, 11, 239);
+  background-color: #fdf900; 
+} */
+
+.Footer {
+  align-items: justify;
+  text-align: right;
+}
+
+
+/*
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+*/
+

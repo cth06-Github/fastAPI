@@ -6,7 +6,7 @@ services:
     ports:
       - 127.0.0.1:80:80
     networks:
-      - anothernetwork
+      - mynetwork
     volumes:
       - .:/usr/src/app-data
     depends_on:
@@ -30,7 +30,6 @@ services:
 
 networks:
   mynetwork:
-  anothernetwork:
 
 volumes:
   database:

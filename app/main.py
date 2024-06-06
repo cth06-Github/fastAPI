@@ -33,14 +33,6 @@ async def create_upload_file(file: Union[UploadFile, None] = None):
             new_file.write(str(contents, encoding='utf-8')) # convert contents from byte to string
         return {"filename": file.filename, "original contents": contents}
 
-@app.get("/test")
-async def read():
-    return "yay"
-
-@app.get("/123")
-def read123():
-    return 123
-
 @app.post('/device/info')
 def save_device_info(info: DeviceInfo, db=Depends(db)):
     object_in_db = crud.get_device_info(db, info.token)
