@@ -48,7 +48,6 @@ function Post() { // !! OR const Post = () => {
         event.preventDefault(); // "if the event does not get explicitly handled, its default action should not be taken as it normally would be" ???
         // Do something with the input value, for example, send it to backend API
 
-        // WRITE THE JSON HERE
         try {
             // send request to backend and wait for the response
             const fetchOptions = { // removed await (apparently fetch is async)
@@ -61,7 +60,7 @@ function Post() { // !! OR const Post = () => {
                     username: usernameValue,
                 })
             };
-            fetch("http://127.0.0.1/testing", fetchOptions)
+            fetch("http://localhost:5000/device/info", fetchOptions) // MUST ENABLE CORS
                 .then(response => response.json()) // consider catching errors...
             
             console.log("maybe maybe")
@@ -83,6 +82,27 @@ function Post() { // !! OR const Post = () => {
         setConfigSubmission(true); // update inputValue variable with event.target.value
         event.preventDefault(); // "if the event does not get explicitly handled, its default action should not be taken as it normally would be" ???
         // Do something with the input value, for example, send it to backend API
+        try {
+            // send request to backend and wait for the response
+            const fetchOptions = { // removed await (apparently fetch is async)
+                method: "POST",
+                headers: { // tell the server we're sending JSON
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ // in a website, data: was used instead of body, if data, data will be serialized and sent as json
+                    modelUrl: modelUrlValue,
+                    frequency: freqValue,
+                    federated: federatedValue,
+                })
+            };
+            fetch("http://localhost:5000/configuration", fetchOptions) // MUST ENABLE CORS
+                .then(response => response.json()) // consider catching errors...
+            
+            console.log("maybe maybe")
+        } catch (error) {
+            console.log("Error error")
+        }
+
         console.log("Input value:", modelUrlValue);
         
         // Clear the input field after submission

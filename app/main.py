@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from .database import SessionLocal, engine
 from .schema import DeviceInfo, Configuration
 from . import crud, models
+from fastapi.middleware.cors import CORSMiddleware
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -16,6 +17,20 @@ def db():
         db.close()
     
 app = FastAPI() # instance of FastAPI class
+
+# Configure CORS
+origins = [
+    "http://localhost",
+    "http://localhost:3000",  # Assuming your frontend runs on port 3000
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["Content-Type", "Authorization"],
+)
 
 @app.get("/")
 async def read_root():
