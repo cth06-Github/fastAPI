@@ -36,7 +36,7 @@ services:
     #  context: .
      # dockerfile: Dockerfile.frontend
     #ports:
-     # - 127.0.0.1:3000:3000
+     # - 127.0.0.1:3000:80
     #networks:
     #  - mynetwork
     #volumes:

@@ -1,4 +1,6 @@
 .Page {
+  background-color: #bebec0;
+  border: 2px solid #1ff40c;
   text-align: center;
   /*padding: 10px 20px; /*what's the order of direction again*/
   margin: 10vh 10vw; /*if I state 1, then does it apply to the rest also?*/
@@ -17,15 +19,15 @@
 }
 
 .mainBox{
-  background-color: #19cd19;
-  align-items: center;
+  background-color: #19a3cd;
+  align-items: center; /*centralised the yellow subBox in terms of y-direction*/ 
   height: 50vh;
-  width: 78vw; /*how to make it relative bound to the header*/
+  /*width: 78vw; /*how to make it relative bound to the header?: if you specify, then it OVERWRITE the margin specified under ID .Pages*/
   color: rgb(20, 1, 1);
   border: 5px solid #f40c0c;
   display: flex;
   flex-direction: row;
-  justify-content: space-between; /*oh the one that separates the 2 boxes*/
+  justify-content: center; /*space-between does NOT separates the 2 boxes???*/
 }
 
 
@@ -33,7 +35,7 @@
   background-color: #fdf900;
   margin: 10vh 10vw; /*how come suddenly so...much?*/
   height: 30vh;
-  width: 70vw;
+  /*width: 70vw;*/
   color: rgb(20, 1, 1);
   border: 5px solid #9e0ae3;
   display: flex;
