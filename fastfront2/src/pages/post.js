@@ -2,11 +2,11 @@
 import './pages.css';
 import React, { useState } from 'react'; // need to check the significance of useState
 import Button from '../components/Button.js'
-import { useNavigate } from "react-router-dom"; // What's the DIFFERENCE when you got { } inside?
+import { useNavigate } from "react-router-dom"; // named imports
 
 
 // define the page as a function
-function Post() { // !! OR const Post = () => {
+function Post() { // !! OR const Post = () => { // MUST START WITH CAPITAL LETTER, OTHERWISE CANNOT WORK
     // define whatever helper functions
     const navigate = useNavigate();
 
@@ -116,7 +116,7 @@ function Post() { // !! OR const Post = () => {
     };
     
     // return -- which stylise the page
-    return(
+    return( // no bracket, code after this line will be IGNORED.
         <div className="Page">
             <header className="Page-header">Send Request Page</header>
             <div className="mainBox">
