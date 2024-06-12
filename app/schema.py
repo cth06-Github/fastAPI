@@ -15,4 +15,4 @@ class Configuration(BaseModel):
     federated: bool
 
     class Config:
-        orm_mode = True
+        orm_mode = True # allows these Pydantic models to be used directly with SQLAlchemy ORM (Object-Relational Mapping) without requiring additional configuration.?

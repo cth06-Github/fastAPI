@@ -8,3 +8,4 @@ SQLALCHEMY_DATABASE_URL = 'postgresql://{}:{}@{}/{}'.format('myuser', 'mypasswor
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
+#  declarative_base() callable returns a new base class from which all mapped classes should inherit.

@@ -4,6 +4,7 @@
   text-align: center;
   /*padding: 10px 20px; /*what's the order of direction again*/
   margin: 10vh 10vw; /*if I state 1, then does it apply to the rest also?*/
+  align-items: center; /*HOW TO CENTRALISE?*/
   
 }
 

@@ -1,5 +1,5 @@
-from typing import Union
-from fastapi import FastAPI, UploadFile, Depends, HTTPException
+from typing import Union, Annotated
+from fastapi import FastAPI, UploadFile, Depends, HTTPException, File
 from pydantic import BaseModel
 #from app.database import Base
 from .database import SessionLocal, engine
@@ -7,8 +7,9 @@ from .schema import DeviceInfo, Configuration
 from . import crud, models
 from fastapi.middleware.cors import CORSMiddleware
 
-models.Base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=engine) #  issue CREATE statements for all tables:??
 
+# together with database.py. which enables connection to database?
 def db():
     try:
         db = SessionLocal()
@@ -29,18 +30,20 @@ app.add_middleware(
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
-    allow_headers=["Content-Type", "Authorization"],
+    allow_headers=["*"],
 )
 
+# defining what the app does
 @app.get("/")
 async def read_root():
     return "Hello World"
 
-@app.post("/uploadfile/")
+@app.post("/uploadfile")
 async def create_upload_file(file: Union[UploadFile, None] = None):
     if not file:
         return {"message": "No upload file sent"}
     else:
+        # the functions associated are async?
         contents = await file.read() # read file. return type is byte (think so)
         file_name = file.filename
         newfile_dir_name = f"/var/lib/data/store/copied_{file_name}" # in docker directory
@@ -80,6 +83,24 @@ def get_configuration(db=Depends(db)):
         return config
     else:
         raise HTTPException(404, crud.error_message('No configuration set'))
+
+'''
+@app.post("/stringy") # change to get if you want to enter the website... otherwise cURL to post something.
+async def create_file(file: Annotated[Union[str, None], File()] = None): # change from byte to str
+    if not file:
+        return {"message": "No file sent"}
+    else:
+        contents = ""
+        with open(file) as the_file:
+            lines = the_file.readlines()
+            for item in lines:
+                contents += item
+        newfile_dir_name = f"/var/lib/data/store/copied_{file}" # in docker directory
+        with open(newfile_dir_name, 'w') as new_file: # create new file
+            new_file.write(contents) # convert contents from byte to string
+        return {"file_name_size": len(file), "original content": lines, "new conent": new_file.readlines()}
+'''
+
 
 # Create a SQLAlchemy database engine using the DATABASE_URL
 #DATABASE_URL = 'postgresql://{}w:{}@{}/{}'.format('myuser', 'mypassword', 'postgres:5432', 'mydatabase')

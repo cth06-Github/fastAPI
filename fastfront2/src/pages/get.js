@@ -2,6 +2,7 @@
 import './pages.css';
 import React, { useState } from 'react'; // need to check the significance of useState
 import Button from '../components/Button.js'
+import UploadSect from '../components/UploadSect.js';
 import { useNavigate } from "react-router-dom";
 
 // define the page as a function
@@ -135,10 +136,11 @@ function Get() { // !! OR const Get = () => {
                     {isModelUrlSubmitted ? <p style={{margin: 2}}>Submitted</p> : <p style={{margin: 2}}>Enter Config Id!</p>}
                 </div>
             </div>
-            <div className="Footer">
-                
-             <Button onClick={() => navigate("/")}>Send Page</Button> 
-                
+
+            <UploadSect/>
+
+            <div className="Footer">    
+                <Button onClick={() => navigate("/")}>Send Page</Button> 
             </div>
         </div>
     )

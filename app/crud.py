@@ -3,7 +3,10 @@ from . import schema, models
 
 
 def save_device_info(db: Session, info: schema.DeviceInfo):
-    device_info_model = models.DeviceInfo(**info.model_dump())
+    device_info_model = models.DeviceInfo(**info.model_dump()) #.model_dump() works because schema inherits pydantic's base model
+                                            # variable number of dictionary argumetns?>
+                                            # converting a model to a dictionary
+                                            # 
     db.add(device_info_model)
     db.commit()
     db.refresh(device_info_model)

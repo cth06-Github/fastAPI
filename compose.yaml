@@ -11,7 +11,7 @@ services:
     networks:
       - mynetwork
     volumes:
-      - .:/usr/src/app-data
+      - .:/var/lib/data/store/
     depends_on:
       - postgres
 

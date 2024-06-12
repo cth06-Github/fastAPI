@@ -2,6 +2,7 @@
 import './pages.css';
 import React, { useState } from 'react'; // need to check the significance of useState
 import Button from '../components/Button.js'
+import UploadSect from '../components/UploadSect.js';
 import { useNavigate } from "react-router-dom"; // named imports
 
 
@@ -97,6 +98,9 @@ function Post() { // !! OR const Post = () => { // MUST START WITH CAPITAL LETTE
             };
             fetch("http://localhost:5000/configuration", fetchOptions) // MUST ENABLE CORS
                 .then(response => response.json()) // consider catching errors...
+                .catch((error) => {
+                    console.error("Error uploading file:", error);
+                  });
             
             console.log("maybe maybe")
         } catch (error) {
@@ -172,10 +176,12 @@ function Post() { // !! OR const Post = () => { // MUST START WITH CAPITAL LETTE
                 </div>
             </div>
             
+            <UploadSect/>
+
             <div className="Footer">
                 <Button onClick={() => navigate("/finddata")}>Get Page</Button>
             </div>
-            
+
         </div>
         //</Router>
     )
