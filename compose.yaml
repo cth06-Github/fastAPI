@@ -32,18 +32,18 @@ services:
       - 5432
 
   #frontend:
-   # build:
-    #  context: .
-     # dockerfile: Dockerfile.frontend
-    #ports:
-     # - 127.0.0.1:3000:80
-    #networks:
-    #  - mynetwork
-    #volumes:
-    #  - ./fastfront2/src:/app/src
-    #depends_on:
-    #  - postgres
-    #  - app
+  #  build:
+  #    context: .
+  #    dockerfile: Dockerfile.frontend
+  #  ports:
+  #    - 127.0.0.1:80:3000
+  #  networks:
+  #    - mynetwork
+  #  volumes:
+  #    - ./fastfront2/src:/app/src
+  #  depends_on:
+  #    - postgres
+  #    - app
 
 networks:
   mynetwork:

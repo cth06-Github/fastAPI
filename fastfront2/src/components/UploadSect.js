@@ -65,6 +65,7 @@ const UploadSect = () => {
             {isFileUploaded && <p>Uploaded!</p>}
         </div>
         // how to read the code above? Is it && operator?
+        // how come the input no need to write value = ....? can this be same component as the other pages?
     );
 };
 

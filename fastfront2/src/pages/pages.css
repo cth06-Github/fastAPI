@@ -22,7 +22,7 @@
 .mainBox{
   background-color: #19a3cd;
   align-items: center; /*centralised the yellow subBox in terms of y-direction*/ 
-  height: 50vh;
+  height: 65vh;
   /*width: 78vw; /*how to make it relative bound to the header?: if you specify, then it OVERWRITE the margin specified under ID .Pages*/
   color: rgb(20, 1, 1);
   border: 5px solid #f40c0c;
@@ -35,7 +35,7 @@
 .subBox{
   background-color: #fdf900;
   margin: 10vh 10vw; /*how come suddenly so...much?*/
-  height: 30vh;
+  height: 55vh;
   /*width: 70vw;*/
   color: rgb(20, 1, 1);
   border: 5px solid #9e0ae3;

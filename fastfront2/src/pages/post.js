@@ -2,6 +2,7 @@
 import './pages.css';
 import React, { useState } from 'react'; // need to check the significance of useState
 import Button from '../components/Button.js'
+import Input from '../components/Input.js'
 import UploadSect from '../components/UploadSect.js';
 import { useNavigate } from "react-router-dom"; // named imports
 
@@ -10,41 +11,32 @@ import { useNavigate } from "react-router-dom"; // named imports
 function Post() { // !! OR const Post = () => { // MUST START WITH CAPITAL LETTER, OTHERWISE CANNOT WORK
     // define whatever helper functions
     const navigate = useNavigate();
-
-    // CAN WE COMBINE THEM TOGTHER INTO A LIST? IMAGINE IF I HAVE 100 INPUTS THEN I NEED TO COPY CODE 100 TIMES
-    // ^includes the update function....HOF?
-    const [tokenValue, setTokenValue] = useState(""); // inputValue state variable is initialised to ''
-    const [usernameValue, setUsernameValue] = useState("");
-    const [modelUrlValue, setModelUrlValue] = useState("");
-    const [freqValue, setFreqValue] = useState(0);
-    const [federatedValue, setFederatedValue] = useState(true); // TO MAKE IT A STRING?
-
+    
+    const [resetStatus, setResetStatus] = useState(true); 
     const [isDISubmitted, setDISubmission] = useState(false);
     const [isConfigSubmitted, setConfigSubmission] = useState(false);
-    
-    // Function to handle input change
-    const handleTokenChange = (event) => {
-        setTokenValue(event.target.value); // update inputValue variable with event.target.value
-    }; 
 
-    const handleUsernameChange = (event) => {
-        setUsernameValue(event.target.value); // update inputValue variable with event.target.value
-    }; 
+    // Function to handle form submission.
+    // Consider if it's possible generalise the code & DRY.
 
-    const handleModelUrlChange = (event) => {
-        setModelUrlValue(event.target.value); // update inputValue variable with event.target.value
-    }; 
+    const ResetTrue = () => {
+        setResetStatus(true); // Correct, update state in an event handler
+    };
 
-    const handleFreqChange = (event) => {
-        setFreqValue(event.target.value); // update inputValue variable with event.target.value
-    }; 
+    const ResetFalse = () => {
+        setResetStatus(false); // Correct, update state in an event handler
+    };
 
-    const handleFederatedChange = (event) => {
-        setFederatedValue(event.target.value); // update inputValue variable with event.target.value
-    }; 
-
-    // Function to handle form submission
     const handleDISubmit = (event) => {
+
+        const DITokenValue = document.getElementById('DIToken').value; // to get the value
+        const DIUsername = document.getElementById('DIUsername').value;
+
+        ResetFalse(); 
+
+        console.log("WAIT");
+        console.log(DITokenValue);
+        console.log(DIUsername);
         setDISubmission(true); // update inputValue variable with event.target.value
         event.preventDefault(); // "if the event does not get explicitly handled, its default action should not be taken as it normally would be" ???
         // Do something with the input value, for example, send it to backend API
@@ -57,29 +49,38 @@ function Post() { // !! OR const Post = () => { // MUST START WITH CAPITAL LETTE
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ // in a website, data: was used instead of body, if data, data will be serialized and sent as json
-                    token: tokenValue,
-                    username: usernameValue,
+                    token: DITokenValue,
+                    username: DIUsername,
                 })
             };
             fetch("http://localhost:5000/device/info", fetchOptions) // MUST ENABLE CORS
-                .then(response => response.json()) // consider catching errors...
+                .then(response => response.json()); // consider catching errors...
             
-            console.log("maybe maybe")
+            console.log("Pass");
         } catch (error) {
-            console.log("Error error")
+            console.log("Error error");
         }
-
-        console.log("Input value:", tokenValue);
         
         // Clear the input field after submission
-        setTokenValue('');
-        setUsernameValue('');
+        // Not sure if it's possible 
+        
+        console.log("WAIT 221");
+        document.getElementById('DIToken').value = ""
+        document.getElementById('DIUsername').value = ""
+        console.log(document.getElementById('DIToken'));
+        console.log(document.getElementById('DIUsername'));
+        
         setTimeout(() => {
             setDISubmission(false);
+            ResetTrue(); 
           }, 2000); // 2 seconds
     };
 
     const handleConfigSubmit = (event) => {
+        const configModelUrlValue = document.getElementById('configModelUrl').value; // to get the value
+        const configFreqValue = document.getElementById('configFreq').value;
+        const configFederatedValue = document.getElementById('configFederated').value;
+        
         setConfigSubmission(true); // update inputValue variable with event.target.value
         event.preventDefault(); // "if the event does not get explicitly handled, its default action should not be taken as it normally would be" ???
         // Do something with the input value, for example, send it to backend API
@@ -91,9 +92,9 @@ function Post() { // !! OR const Post = () => { // MUST START WITH CAPITAL LETTE
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ // in a website, data: was used instead of body, if data, data will be serialized and sent as json
-                    modelUrl: modelUrlValue,
-                    frequency: freqValue,
-                    federated: federatedValue,
+                    modelUrl: configModelUrlValue,
+                    frequency: configFreqValue,
+                    federated: configFederatedValue,
                 })
             };
             fetch("http://localhost:5000/configuration", fetchOptions) // MUST ENABLE CORS
@@ -106,17 +107,15 @@ function Post() { // !! OR const Post = () => { // MUST START WITH CAPITAL LETTE
         } catch (error) {
             console.log("Error error")
         }
-
-        console.log("Input value:", modelUrlValue);
         
         // Clear the input field after submission
-        setModelUrlValue('');
-        setFreqValue(0);
-        setFederatedValue(true);
+        //setModelUrlValue('');
+        //setFreqValue(0);
+        //setFederatedValue(true);
         setTimeout(() => {
             setConfigSubmission(false);
+            ResetTrue(); 
             }, 2000); // 2 seconds
-
     };
     
     // return -- which stylise the page
@@ -126,17 +125,17 @@ function Post() { // !! OR const Post = () => { // MUST START WITH CAPITAL LETTE
             <div className="mainBox">
                 <div className="subBox">
                     <p> DeviceInfo </p>
-                    <input 
+                    <Input
+                        label="Token (string)" 
                         type="text" 
-                        placeholder="Token (string)..."
-                        value = {tokenValue}
-                        onChange = {handleTokenChange}
+                        id = "DIToken"
+                        reset = {resetStatus}
                     /> 
-                    <input 
-                        type="text" 
-                        placeholder="Username (string)..."
-                        value = {usernameValue}
-                        onChange = {handleUsernameChange}
+                    <Input 
+                        label="Username (string)"
+                        type="text"
+                        id = "DIUsername"
+                        reset = {resetStatus}
                     /> 
 
                     <button className="miniButton" onClick={handleDISubmit}>
@@ -147,28 +146,24 @@ function Post() { // !! OR const Post = () => { // MUST START WITH CAPITAL LETTE
 
                 <div className="subBox">
                     <p> Configuration </p>
-                    <input 
-                        type="text" 
-                        placeholder="modelUrl (string)..."
-                        value = {modelUrlValue}
-                        onChange = {handleModelUrlChange}
-                        
+                    <Input 
+                        label="ModelUrl (string)"
+                        type="text"
+                        id = "configModelUrl"
+                        reset = {resetStatus}            
                     /> 
-
-                    <input 
+                    <Input 
+                        label="Frequency (int)"
                         type="number" 
-                        placeholder="frequency (int)..."
-                        value = {freqValue}
-                        onChange = {handleFreqChange}
+                        id = "configFreq"
+                        reset = {resetStatus}
                     /> 
-
-                    <input 
+                    <Input 
+                        label="Federated (bool)"
                         type="text" 
-                        placeholder="federated (bool)..."
-                        value = {federatedValue}
-                        onChange = {handleFederatedChange}
+                        id = "configFederated"
+                        reset = {resetStatus}
                     /> 
-
                     <button className="miniButton" onClick={handleConfigSubmit}>
                         Submit
                     </button>
@@ -187,6 +182,24 @@ function Post() { // !! OR const Post = () => { // MUST START WITH CAPITAL LETTE
     )
 }
 export default Post; // export the page which can be imported elsewhere 
+
+/*To try Radio Buttons later*/
+/*
+<p style = {{textAlign: "left", fontWeight: "bold"}}>Federated (bool)</p> 
+                    <Input 
+                        label="true"
+                        type="radio"
+                        id = "configFederated"
+                        value = "true" 
+                    /> 
+                    <Input 
+                        label="false"
+                        type="radio"
+                        id = "configFederated"
+                        value = "false" 
+                    /> 
+*/
+
 
 
 /* THE FOLLOWING GVES ME ERROR the whatever Null error thingy
