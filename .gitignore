@@ -1,4 +1,6 @@
 *.txt
 file-storage/
+database/
 
 !file-storage/Commands.txt
+!file-storage/dockerCommands.txt
