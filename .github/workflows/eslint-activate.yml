@@ -12,6 +12,6 @@ jobs:
       - name: directory with package.json
         run: cd fastfront2
       - name: Install modules
-        run: yarn
+        run: npm install
       - name: Run ESLint
-        run: yarn run eslint . --ext .js,.jsx,.ts,.tsx
+        run: npm run eslint . --ext .js,.jsx,.ts,.tsx
