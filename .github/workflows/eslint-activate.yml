@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: cd fastfront2
-      - run: npm install
-      - run: npm run eslint . --ext .js,.jsx,.ts,.tsx
+      - name: eslint
+        run: |
+          cd fastfront2
+          npm install
+          npm run eslint . --ext .js,.jsx,.ts,.tsx 
