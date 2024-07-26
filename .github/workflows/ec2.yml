@@ -13,11 +13,12 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       - name: Build the Docker image 
-        run: | 
-          docker build -f Dockerfile.frontend . 
-          docker build -f Dockerfile.backend . 
+        run: docker build -f Dockerfile.frontend -t fast-api_v1 . 
+          #docker build -f Dockerfile.backend . 
       - name: Push to Dockerhub
-        run: docker push cth06docker/fast-api_v1:latest
+        run: | 
+          docker tag fast-api_v1 cth06docker/fast-api_v1
+          docker push cth06docker/fast-api_v1:latest
   
   ec2:
     needs: dockerhub 
