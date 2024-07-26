@@ -14,8 +14,8 @@ jobs:
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       - name: Build the Docker image 
         run: | 
-        docker build -f Dockerfile.frontend . 
-        docker build -f Dockerfile.backend . 
+          docker build -f Dockerfile.frontend . 
+          docker build -f Dockerfile.backend . 
       - name: Push to Dockerhub
         run: docker push cth06docker/fast-api_v1:latest
   
