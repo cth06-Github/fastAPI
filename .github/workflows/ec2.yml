@@ -26,8 +26,8 @@ jobs:
     steps: 
       - name: Pull image from docker hub 
         run: docker pull cth06docker/fast-api_v1:latest 
-      - name: Delete old container 
-        run: docker rm -f 
+      #- name: Delete old container 
+      #  run: docker rm -f 
       - name: Run docker container 
         run: docker compose up
  
