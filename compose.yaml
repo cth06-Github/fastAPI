@@ -13,9 +13,9 @@ services:
     volumes:
       - .:/var/lib/data/store/
     depends_on:
-      - postgres
+      - db
 
-  postgres:
+  db:
     image: postgres:latest
     restart: always
     environment:
@@ -31,19 +31,19 @@ services:
     expose:
       - 5432
 
-  #frontend:
-  #  build:
-  #    context: .
-  #    dockerfile: Dockerfile.frontend
-  #  ports:
-  #    - 127.0.0.1:80:3000
-  #  networks:
-  #    - mynetwork
-  #  volumes:
-  #    - ./fastfront2/src:/app/src
-  #  depends_on:
-  #    - postgres
-  #    - app
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - 127.0.0.1:80:3000
+    networks:
+      - mynetwork
+    volumes:
+      - ./fastfront2/src:/app/src
+    depends_on:
+      - db
+      - app
 
 networks:
   mynetwork:

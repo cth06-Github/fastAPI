@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 #SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
-SQLALCHEMY_DATABASE_URL = 'postgresql://{}:{}@{}/{}'.format('myuser', 'mypassword', 'postgres:5432', 'mydatabase')
+SQLALCHEMY_DATABASE_URL = 'postgresql://{}:{}@{}/{}'.format('myuser', 'mypassword', 'db:5432', 'mydatabase') #postgres:5432
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)

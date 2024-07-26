@@ -68,7 +68,7 @@ function Get() { // !! OR const Get = () => {
             updateMatch(false); // restore value of boolean match of URL
             // send request to backend and wait for the response
             console.log("execution config");
-            const fetchedValue = await fetch(`http://localhost:5000/configuration`) // MUST ENABLE CORS
+            const fetchedValue = await fetch("http://localhost:5000/configuration") // MUST ENABLE CORS
                 .then(response => response.json()) // consider catching errors...DON'T JUST STOP HERE it will only give [object Promise]
                 .then(data => { // response.json()
                     console.log(data); // This will log the data from the JSON response

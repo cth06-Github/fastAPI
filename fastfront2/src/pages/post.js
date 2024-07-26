@@ -32,7 +32,7 @@ function Post() { // !! OR const Post = () => { // MUST START WITH CAPITAL LETTE
         const DITokenValue = document.getElementById('DIToken').value; // to get the value
         const DIUsername = document.getElementById('DIUsername').value;
 
-        ResetFalse(); 
+        //ResetFalse(); 
 
         console.log("WAIT");
         console.log(DITokenValue);
@@ -72,7 +72,7 @@ function Post() { // !! OR const Post = () => { // MUST START WITH CAPITAL LETTE
         
         setTimeout(() => {
             setDISubmission(false);
-            ResetTrue(); 
+            //ResetTrue(); 
           }, 2000); // 2 seconds
     };
 

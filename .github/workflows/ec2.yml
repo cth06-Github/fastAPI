@@ -1,0 +1,33 @@
+name: deploy to EC2
+run-name: ${{ github.actor }} is trying to deploy to AWS EC2
+on: [push] #any branch
+jobs:
+  dockerhub:
+    runs-on: ubuntu-latest
+      steps: 
+        — uses: actions/checkout@v4 
+        — name: Login Dockerhub 
+          env: 
+            DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+            DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+          run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        — name: Build the Docker image 
+          run: docker build —t fast-api_v1 .
+        — name: Push to Dockerhub
+          run: docker push cth06docker/fast-api_v1:latest
+  
+  ec2:
+    needs: dockerhub 
+    runs-on: self—hosted 
+    steps: 
+      — name: Pull image from docker hub 
+        run: docker pull cth06docker/fast-api_v1:latest 
+      — name: Delete old container 
+        run: docker rm —f 
+      — name: Run docker container 
+        run: docker compose up
+
+ 
+ 
+ 
+ 
