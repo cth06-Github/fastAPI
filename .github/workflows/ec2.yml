@@ -30,5 +30,5 @@ jobs:
       #  run: docker rm -f 
       - name: Run docker container 
       #  run: docker compose up
-        run: docker run -dp 127.0.0.1:80:3000 
+        run: docker run -dp 127.0.0.1:80:3000 fast-api_v1
  
