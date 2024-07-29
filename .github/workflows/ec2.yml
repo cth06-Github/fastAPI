@@ -24,6 +24,8 @@ jobs:
     needs: dockerhub 
     runs-on: self-hosted 
     steps: 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
       - name: Allow Docker socket connection
         run: sudo chmod 666 /var/run/docker.sock
       - name: Clear space in EC2
