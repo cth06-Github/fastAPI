@@ -27,10 +27,16 @@ jobs:
     needs: dockerhub 
     runs-on: self-hosted 
     steps: 
+      - uses: actions/checkout@v4       
+
       - name: Allow Docker socket connection
         run: sudo chmod 666 /var/run/docker.sock
       - name: Clear space in EC2
-        run: docker system prune -a
+        run: | 
+          docker system prune -a
+          y
+      - name: Run docker compose 
+        run: docker compose up --build
       - name: Pull image from docker hub 
         run: | 
           docker pull cth06docker/fast-api_v1:frontend
