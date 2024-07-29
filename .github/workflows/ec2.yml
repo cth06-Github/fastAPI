@@ -42,7 +42,7 @@ jobs:
           echo $CONTAINER_ID_frontend
           echo $CONTAINER_ID_backend
           CONTAINER_ID_TOTAL="$CONTAINER_ID_frontend $CONTAINER_ID_backend"
-          if [ -n "$CONTAINER_ID_TOTAL"]; then
+          if [ -n "$CONTAINER_ID_TOTAL" ]; then
             docker stop $CONTAINER_ID_TOTAL
             docker remove $CONTAINER_ID_TOTAL
             echo "containers removed done"
