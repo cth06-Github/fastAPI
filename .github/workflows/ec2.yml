@@ -43,5 +43,5 @@ jobs:
           fi 
       - name: Run Docker container 
         #run: docker compose up
-        run: docker run -dp 52.87.220.159:80:3000 --name hello cth06docker/fast-api_v1:latest
+        run: docker run -dp 172.31.62.107:80:3000 --name hello cth06docker/fast-api_v1:latest
  
