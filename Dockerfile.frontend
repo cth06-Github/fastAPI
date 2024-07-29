@@ -16,7 +16,7 @@ RUN npm install
 COPY ./fastfront2 /app
 
 # Expose port 80 (80 or 3000 does not matter?)
-EXPOSE 80
+EXPOSE 3000
 
 # Command to start the development server
 CMD ["npm", "start"]
