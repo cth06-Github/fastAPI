@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile.backend
     ports:
-      - 127.0.0.1:5000:5000
+      - 172.31.62.107:5000:5000
     networks:
       - mynetwork
     volumes:
@@ -23,7 +23,7 @@ services:
       POSTGRES_PASSWORD: mypassword
       POSTGRES_DB: mydatabase
     ports:
-      - 5432:5432
+      - 172.31.62.107.5432:5432
     networks:
       - mynetwork
     volumes:
@@ -36,7 +36,7 @@ services:
       context: .
       dockerfile: Dockerfile.frontend
     ports:
-      - 127.0.0.1:80:3000
+      - 172.31.62.107:80:3000
     networks:
       - mynetwork
     volumes:
