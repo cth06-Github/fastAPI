@@ -30,7 +30,9 @@ jobs:
         run: docker pull cth06docker/fast-api_v1:latest 
       - name: Delete old container if present
         run: | 
-          if [docker ps -q -f "name=hello"]; then
+          CONTAINER_ID=$(docker ps -q -f "name=hello")
+          echo $CONTAINER_ID
+          if [CONTAINER_ID != ""]; then
             docker rm -f hello
             echo "container check done"
           fi 
