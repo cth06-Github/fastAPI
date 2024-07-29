@@ -12,13 +12,16 @@ jobs:
           DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      - name: Build the Docker image 
-        run: docker build -f Dockerfile.frontend -t fast-api_v1 . 
-          #docker build -f Dockerfile.backend . 
-      - name: Push to Dockerhub
+      - name: Build both Docker images 
         run: | 
-          docker tag fast-api_v1 cth06docker/fast-api_v1
-          docker push cth06docker/fast-api_v1:latest
+          docker build -f Dockerfile.frontend -t fast-api-frontend . 
+          docker build -f Dockerfile.backend -t fast-api-backend . 
+      - name: Push both images to Dockerhub
+        run: | 
+          docker tag fast-api-frontend cth06docker/fast-api_v1:frontend
+          docker tag fast-api-backend cth06docker/fast-api_v1:backend
+          docker push cth06docker/fast-api_v1:frontend
+          docker push cth06docker/fast-api_v1:backend
   
   ec2:
     needs: dockerhub 
@@ -31,17 +34,25 @@ jobs:
       - name: Clear space in EC2
         run: docker system prune -a
       - name: Pull image from docker hub 
-        run: docker pull cth06docker/fast-api_v1:latest 
+        run: | 
+          docker pull cth06docker/fast-api_v1:frontend
+          docker pull cth06docker/fast-api_v1:backend 
       - name: Delete old container if present
         run: | 
-          CONTAINER_ID=$(docker ps -q -f "name=hello")
-          echo $CONTAINER_ID
-          if [ -n "$CONTAINER_ID" ]; then
-            docker stop $CONTAINER_ID
-            docker remove $CONTAINER_ID
-            echo "container removed done"
+          CONTAINER_ID_frontend=$(docker ps -q -f "name=frontend")
+          CONTAINER_ID_backend=$(docker ps -q -f "name=backend")
+          echo $CONTAINER_ID_frontend
+          echo $CONTAINER_ID_backend
+          CONTAINER_ID_TOTAL="$CONTAINER_ID_frontend $CONTAINER_ID_backend"
+          if [ -n "$CONTAINER_ID_TOTAL"]; then
+            docker stop $CONTAINER_ID_TOTAL
+            docker remove $CONTAINER_ID_TOTAL
+            echo "containers removed done"
           fi 
-      - name: Run Docker container 
+      - name: Run Docker containers 
         #run: docker compose up
-        run: docker run -dp 172.31.62.107:80:3000 --name hello cth06docker/fast-api_v1:latest
+        run: |  
+          docker run -dp 172.31.62.107:80:3000 --name frontend cth06docker/fast-api_v1:frontend
+          docker run -dp 172.31.62.107:5000:5000 --name backend cth06docker/fast-api_v1:backend
+        #cannot localhost or EC2 public network. Must be the private network.
  
