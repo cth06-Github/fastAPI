@@ -23,7 +23,7 @@ services:
       POSTGRES_PASSWORD: mypassword
       POSTGRES_DB: mydatabase
     ports:
-      - 172.31.62.107.5432:5432
+      - 172.31.62.107:5432:5432
     networks:
       - mynetwork
     volumes:
