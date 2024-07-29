@@ -32,9 +32,7 @@ jobs:
       - name: Allow Docker socket connection
         run: sudo chmod 666 /var/run/docker.sock
       - name: Clear space in EC2
-        run: | 
-          docker system prune -a
-          y
+        run: docker system prune -af
       - name: Run docker compose 
         run: docker compose up --build
       - name: Pull image from docker hub 
