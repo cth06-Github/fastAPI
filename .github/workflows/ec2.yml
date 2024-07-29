@@ -24,10 +24,10 @@ jobs:
     needs: dockerhub 
     runs-on: self-hosted 
     steps: 
-      - name: Pull image from docker hub 
-        run: docker pull cth06docker/fast-api_v1:latest 
       - name: Allow Docker socket connection
         run: sudo chmod 666 /var/run/docker.sock
+      - name: Pull image from docker hub 
+        run: docker pull cth06docker/fast-api_v1:latest 
       - name: Delete old container if present
         run: | 
           if docker ps -f "name=hello"; then
