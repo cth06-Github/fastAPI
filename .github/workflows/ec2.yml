@@ -35,7 +35,11 @@ jobs:
         run: docker system prune -af
       - name: Remove any existing containers
         run: |
-          docker stop $(docker ps -a -q)
-          docker remove $(docker ps -a -q)
+          CONTAINER_ID_TOTAL=$(docker ps -a -q)
+          if [ -n "$CONTAINER_ID_TOTAL" ]; then
+            docker stop $(docker ps -a -q)
+            docker remove $(docker ps -a -q)
+            echo "containers removed done"
+          fi 
       - name: Run docker compose up
         run: docker compose up --build
