@@ -37,7 +37,8 @@ jobs:
           CONTAINER_ID=$(docker ps -q -f "name=hello")
           echo $CONTAINER_ID
           if [ -n "$CONTAINER_ID" ]; then
-            docker rm -f $CONTAINER_ID
+            docker stop $CONTAINER_ID
+            docker remove $CONTAINER_ID
             echo "container removed done"
           fi 
       - name: Run Docker container 
