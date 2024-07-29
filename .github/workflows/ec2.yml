@@ -1,6 +1,6 @@
 name: deploy to EC2
 run-name: ${{ github.actor }} is trying to deploy to AWS EC2
-on: [push] #any branch
+on: [push] #any branch testing 123
 jobs:
   dockerhub:
     runs-on: ubuntu-latest
