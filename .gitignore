@@ -4,3 +4,4 @@ database/
 
 !file-storage/Commands.txt
 !file-storage/dockerCommands.txt
+!.github/workflows/ec2Draft.txt
