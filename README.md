@@ -12,5 +12,5 @@ This file may be changed to test for Github actions.
 
 3] Understanding Database, model, schema, etc. <br>
 
-_Last major change: 8 Aug 2024_<br>
+_Last major change: 8 Aug 2024_ <br>
 _Last updated: 24 Sep 2024_
